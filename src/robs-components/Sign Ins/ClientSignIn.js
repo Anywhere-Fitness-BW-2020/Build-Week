@@ -1,5 +1,5 @@
 import React from "react";
-import Form from "../Forms/FormClient";
+import Form from "../Forms/SignInForm";
 import Styled from "styled-components";
 
 export default function ClientSignIn(props){

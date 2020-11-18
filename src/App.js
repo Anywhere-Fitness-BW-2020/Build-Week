@@ -16,7 +16,18 @@ const emptyForm = {
   instructor: "",
 }
 
+const emptyFormSignIn = {
+  username: "",
+  password: "",
+}
+
 const emptyErrors = {
+  username: "",
+  password: "",
+  instructor: "",
+}
+
+const emptyErrorsSignIn = {
   username: "",
   password: "",
   instructor: "",
@@ -24,9 +35,13 @@ const emptyErrors = {
 
 function App() {
   const [clientList, setClientList] = useState([]);
+  const [clientListSignIn, setClientListSignIn] = useState([]);
   const [formData, setFormData] = useState(emptyForm);
+  const [formDataSignIn, setFormDataSignIn] = useState(emptyFormSignIn);
   const [errors, setErrors] = useState(emptyErrors);
+  const [errorsSignIn, setErrorsSignIn] = useState(emptyErrorsSignIn);
   const [disabled, setDisabled] = useState(true);
+  const [disabledSignIn, setDisabledSignIn] = useState(true);
 
   const formSubmit = () => {
     const newClient = {
@@ -37,6 +52,18 @@ function App() {
     setClientList([
       newClient,
       ...clientList
+    ]);
+  }
+
+  const formSubmitSignIn = () => {
+    const signInClient = {
+      name: formDataSignIn.name.trim(),
+      password: formDataSignIn.password.trim(),
+      instructor: formDataSignIn.instructor.trim(),
+    }
+    setClientListSignIn([
+      signInClient,
+      ...clientListSignIn
     ]);
   }
 
@@ -61,11 +88,38 @@ function App() {
     });
   }
 
+  const handleChangesSignIn = (name, value) => {
+    Yup.reach(Schema, name)
+      .validate(value)
+      .then(()=>{
+        setErrorsSignIn({
+          ...errorsSignIn,
+          [name]: ""
+        })
+      })
+      .catch((err)=>{
+        setErrorsSignIn({
+          ...errorsSignIn,
+          [name]: err.errors[0]
+        })
+      });
+      setFormDataSignIn({
+      ...formDataSignIn,
+      [name]: value
+    });
+  }
+
   useEffect(() => {
     Schema.isValid(formData).then((valid)=> {
       setDisabled(!valid);
     });
   }, [formData]);
+
+  useEffect(() => {
+    Schema.isValid(formDataSignIn).then((valid)=> {
+      setDisabledSignIn(!valid);
+    });
+  }, [formDataSignIn]);
 
   return (
     <BrowserRouter>
@@ -96,11 +150,11 @@ function App() {
 
           <Route path={"/client-sign-in"} >
             <SignIn 
-              formData={formData}
-              disabled={disabled}
-              formSubmit={formSubmit}
-              handleChanges={handleChanges}
-              errors={errors}
+              formData={formDataSignIn}
+              disabled={disabledSignIn}
+              formSubmit={formSubmitSignIn}
+              handleChanges={handleChangesSignIn}
+              errors={errorsSignIn}
             />
           </Route>
 
