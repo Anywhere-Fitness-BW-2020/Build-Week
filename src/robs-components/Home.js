@@ -45,6 +45,7 @@ const StyledHome = Styled.div`
       font-size: 2rem;
       margin: 20px;
       text-shadow: 1px 1px 3px grey;
+      max-width: 100vw;
     }
 
     p{
@@ -52,6 +53,7 @@ const StyledHome = Styled.div`
       width: 50vw;
       margin: 20px;
       text-shadow: 1px 1px 3px grey;
+      max-width: 100vw;
     }
   }
   .buttons-container{
@@ -61,8 +63,18 @@ const StyledHome = Styled.div`
     min-height: 10vh;
 
     button{
-
+      background-color: orange;
+      border: none;
+      border: 1px solid black;
+      padding: 15px 32px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 2px 2px 2px grey;
+    }
+    button:Hover {
+      background-color: white;
+      border: 1px solid orange;
+      color: orange;
     }
   }
-
 `;
