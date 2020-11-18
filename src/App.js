@@ -7,8 +7,8 @@ import Styled from "styled-components";
 import Home from "./robs-components/Home";
 import SignUp from "./robs-components/Sign Ups/ClientSignUp";
 import SignIn from "./robs-components/Sign Ins/ClientSignIn";
-import Schema from "./robs-components/Validations/ClientValidation";
-
+import SchemaSignUp from "./robs-components/Validations/ClientValidation";
+import SchemaSignIn from "./robs-components/Validations/ValidationSignIn";
 
 const emptyForm = {
   username: "",
@@ -68,7 +68,7 @@ function App() {
   }
 
   const handleChanges = (name, value) => {
-    Yup.reach(Schema, name)
+    Yup.reach(SchemaSignUp, name)
       .validate(value)
       .then(()=>{
         setErrors({
@@ -89,7 +89,7 @@ function App() {
   }
 
   const handleChangesSignIn = (name, value) => {
-    Yup.reach(Schema, name)
+    Yup.reach(SchemaSignIn, name)
       .validate(value)
       .then(()=>{
         setErrorsSignIn({
@@ -110,13 +110,13 @@ function App() {
   }
 
   useEffect(() => {
-    Schema.isValid(formData).then((valid)=> {
+    SchemaSignUp.isValid(formData).then((valid)=> {
       setDisabled(!valid);
     });
   }, [formData]);
 
   useEffect(() => {
-    Schema.isValid(formDataSignIn).then((valid)=> {
+    SchemaSignIn.isValid(formDataSignIn).then((valid)=> {
       setDisabledSignIn(!valid);
     });
   }, [formDataSignIn]);

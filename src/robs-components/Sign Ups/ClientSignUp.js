@@ -47,6 +47,7 @@ const ClientSignUpStyles = Styled.div`
   }
 
   .form-container{
+    min-width: 50vw;
     display: flex;
     flex-direction: column;
     Justify-content: space-evenly;
