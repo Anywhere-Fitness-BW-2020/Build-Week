@@ -5,8 +5,9 @@ export default function FormClient(props){
   const { formData, disabled, formSubmit, handleChanges, errors } = props;
 
   const onChange = (evt) => {
-    const {name, value} = evt.target;
-    handleChanges(name, value);
+    const {name, value, checked, type} = evt.target;
+    const correctValue = type === "checkbox" ? checked : value;
+    handleChanges(name, correctValue);
   }
 
   const onSubmit = (evt) => {
@@ -17,7 +18,7 @@ export default function FormClient(props){
   return(
     <StyledClientForm>
       <form onSubmit={onSubmit}>
-        <label> Name:
+        <label> Username:
           <input 
             type="text"
             name="name"
@@ -26,14 +27,6 @@ export default function FormClient(props){
           />
         </label>
 
-        <label> Email:
-          <input 
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={onChange}
-          />
-        </label>
 
         <label> Password:
           <input 
@@ -44,11 +37,20 @@ export default function FormClient(props){
           />
         </label>
 
+        <label> Are You an Instructor?<br/> Yes
+          <input 
+            type="checkbox"
+            name="instructor"
+            value={formData.instructor}
+            onChange={onChange}
+          />
+        </label>
+
         <div className="submit-section">
           <div className="errors">
               <div>{errors.name}</div>
-              <div>{errors.email}</div>
               <div>{errors.password}</div>
+              <div>{errors.instructor}</div>
           </div>
           <button disabled={disabled} >Sign Up</button>
         </div>

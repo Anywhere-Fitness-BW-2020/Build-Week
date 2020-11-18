@@ -5,54 +5,34 @@ import Styled from "styled-components";
 
 
 import Home from "./robs-components/Home";
-import ClientSignUp from "./robs-components/Sign Ups/ClientSignUp";
-import InstructorSignUp from "./robs-components/Sign Ups/InstructorSignUp";
-import ClientSignIn from "./robs-components/Sign Ins/ClientSignIn";
-import InstructorSignIn from "./robs-components/Sign Ins/InstructorSignIn";
-import ClientSchema from "./robs-components/Validations/ClientValidation";
-import InstructorSchema from "./robs-components/Validations/InstructorValidation";
+import SignUp from "./robs-components/Sign Ups/ClientSignUp";
+import SignIn from "./robs-components/Sign Ins/ClientSignIn";
+import Schema from "./robs-components/Validations/ClientValidation";
 
 
-const emptyFormClient = {
-  name: "",
-  email: "",
+const emptyForm = {
+  username: "",
   password: "",
+  instructor: "",
 }
 
-const emptyFormInstructor = {
-  name: "",
-  email: "",
+const emptyErrors = {
+  username: "",
   password: "",
-  auth: "",
-}
-
-const emptyErrorsClient = {
-  name: "",
-  email: "",
-  password: "",
-}
-
-const emptyErrorsInstructor = {
-  name: "",
-  email: "",
-  password: "",
-  auth: "",
+  instructor: "",
 }
 
 function App() {
   const [clientList, setClientList] = useState([]);
-  const [instructorList, setInstructorList] = useState([]);
-  const [formDataClient, setFormDataClient] = useState(emptyFormClient);
-  const [formDataInstructor, setFormDataInstructor] = useState(emptyFormInstructor);
-  const [errorsClient, setErrorsClient] = useState(emptyErrorsClient);
-  const [errorsInstructor, setErrorsInstructor] = useState(emptyErrorsInstructor);
+  const [formData, setFormData] = useState(emptyForm);
+  const [errors, setErrors] = useState(emptyErrors);
   const [disabled, setDisabled] = useState(true);
 
-  const formSubmitClient = () => {
+  const formSubmit = () => {
     const newClient = {
-      name: formDataClient.name.trim(),
-      email: formDataClient.email.trim(),
-      password: formDataClient.email.trim(),
+      name: formData.name.trim(),
+      password: formData.password.trim(),
+      instructor: formData.instructor.trim(),
     }
     setClientList([
       newClient,
@@ -60,72 +40,32 @@ function App() {
     ]);
   }
 
-  const formSubmitInstructor = () => {
-    const newInstructor = {
-      name: formDataInstructor.name.trim(),
-      email: formDataInstructor.email.trim(),
-      password: formDataInstructor.email.trim(),
-      auth: formDataInstructor.auth.trim(),
-    }
-    setInstructorList([
-      newInstructor,
-      ...instructorList
-    ]);
-  }
-
-  const handleChangesClient = (name, value) => {
-    Yup.reach(ClientSchema, name)
+  const handleChanges = (name, value) => {
+    Yup.reach(Schema, name)
       .validate(value)
       .then(()=>{
-        setErrorsClient({
-          ...errorsClient,
+        setErrors({
+          ...errors,
           [name]: ""
         })
       })
       .catch((err)=>{
-        setErrorsClient({
-          ...errorsClient,
+        setErrors({
+          ...errors,
           [name]: err.errors[0]
         })
       });
-      setFormDataClient({
-      ...formDataClient,
-      [name]: value
-    });
-  }
-
-  const handleChangesInstructor = (name, value) => {
-    Yup.reach(InstructorSchema, name)
-      .validate(value)
-      .then(()=>{
-        setErrorsInstructor({
-          ...errorsInstructor,
-          [name]: ""
-        })
-      })
-      .catch((err)=>{
-        setErrorsInstructor({
-          ...errorsInstructor,
-          [name]: err.errors[0]
-        })
-      });
-      setFormDataInstructor({
-      ...formDataInstructor,
+      setFormData({
+      ...formData,
       [name]: value
     });
   }
 
   useEffect(() => {
-    ClientSchema.isValid(formDataClient).then((valid)=> {
+    Schema.isValid(formData).then((valid)=> {
       setDisabled(!valid);
     });
-  }, [formDataClient]);
-
-  useEffect(() => {
-    InstructorSchema.isValid(formDataInstructor).then((valid)=> {
-      setDisabled(!valid);
-    });
-  }, [formDataInstructor]);
+  }, [formData]);
 
   return (
     <BrowserRouter>
@@ -136,7 +76,6 @@ function App() {
             <nav>
               <Link to="/" style={{paddingLeft: "15px", color: "black"}}>Home</Link>
               <Link to="/client-sign-in" style={{paddingLeft: "15px", color: "black"}}>Sign In</Link>
-              <Link to="/instructor-sign-in" style={{paddingLeft: "15px", color: "black"}}>Instructor Sign In</Link>
             </nav>
           </div>
           <div className="slogan">
@@ -146,42 +85,22 @@ function App() {
 
         <Switch>
           <Route path={"/client-sign-up"} >
-            <ClientSignUp 
-              formData={formDataClient}
+            <SignUp 
+              formData={formData}
               disabled={disabled}
-              formSubmit={formSubmitClient}
-              handleChanges={handleChangesClient}
-              errors={errorsClient}
+              formSubmit={formSubmit}
+              handleChanges={handleChanges}
+              errors={errors}
             />
           </Route>
 
           <Route path={"/client-sign-in"} >
-            <ClientSignIn 
-              formData={formDataClient}
+            <SignIn 
+              formData={formData}
               disabled={disabled}
-              formSubmit={formSubmitClient}
-              handleChanges={handleChangesClient}
-              errors={errorsClient}
-            />
-          </Route>
-
-          <Route path={"/instructor-sign-up"} >
-          <InstructorSignUp 
-              formData={formDataInstructor}
-              disabled={disabled}
-              formSubmit={formSubmitInstructor}
-              handleChanges={handleChangesInstructor}
-              errors={errorsInstructor}
-            />
-          </Route>
-
-          <Route path={"/instructor-sign-in"} >
-          <InstructorSignIn 
-              formData={formDataInstructor}
-              disabled={disabled}
-              formSubmit={formSubmitInstructor}
-              handleChanges={handleChangesInstructor}
-              errors={errorsInstructor}
+              formSubmit={formSubmit}
+              handleChanges={handleChanges}
+              errors={errors}
             />
           </Route>
 
