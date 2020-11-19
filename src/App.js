@@ -13,7 +13,7 @@ import SchemaSignIn from "./robs-components/Validations/ValidationSignIn";
 const emptyForm = {
   username: "",
   password: "",
-  instructor: "",
+  instructor: false,
 }
 
 const emptyFormSignIn = {
@@ -30,7 +30,6 @@ const emptyErrors = {
 const emptyErrorsSignIn = {
   username: "",
   password: "",
-  instructor: "",
 }
 
 function App() {
