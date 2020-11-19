@@ -48,7 +48,7 @@ export default function FormClient(props){
 
         <div className="submit-section">
           <div className="errors">
-              <div>{errors.name}</div>
+              <div>{errors.username}</div>
               <div>{errors.password}</div>
               <div>{errors.instructor}</div>
           </div>
