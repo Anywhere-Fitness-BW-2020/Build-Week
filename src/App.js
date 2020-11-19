@@ -5,54 +5,48 @@ import Styled from "styled-components";
 
 
 import Home from "./robs-components/Home";
-import ClientSignUp from "./robs-components/Sign Ups/ClientSignUp";
-import InstructorSignUp from "./robs-components/Sign Ups/InstructorSignUp";
-import ClientSignIn from "./robs-components/Sign Ins/ClientSignIn";
-import InstructorSignIn from "./robs-components/Sign Ins/InstructorSignIn";
-import ClientSchema from "./robs-components/Validations/ClientValidation";
-import InstructorSchema from "./robs-components/Validations/InstructorValidation";
+import SignUp from "./robs-components/Sign Ups/ClientSignUp";
+import SignIn from "./robs-components/Sign Ins/ClientSignIn";
+import SchemaSignUp from "./robs-components/Validations/ClientValidation";
+import SchemaSignIn from "./robs-components/Validations/ValidationSignIn";
 
+const emptyForm = {
+  username: "",
+  password: "",
+  instructor: false,
+}
 
-const emptyFormClient = {
-  name: "",
-  email: "",
+const emptyFormSignIn = {
+  username: "",
   password: "",
 }
 
-const emptyFormInstructor = {
-  name: "",
-  email: "",
+const emptyErrors = {
+  username: "",
   password: "",
-  auth: "",
+  instructor: "",
 }
 
-const emptyErrorsClient = {
-  name: "",
-  email: "",
+const emptyErrorsSignIn = {
+  username: "",
   password: "",
-}
-
-const emptyErrorsInstructor = {
-  name: "",
-  email: "",
-  password: "",
-  auth: "",
 }
 
 function App() {
   const [clientList, setClientList] = useState([]);
-  const [instructorList, setInstructorList] = useState([]);
-  const [formDataClient, setFormDataClient] = useState(emptyFormClient);
-  const [formDataInstructor, setFormDataInstructor] = useState(emptyFormInstructor);
-  const [errorsClient, setErrorsClient] = useState(emptyErrorsClient);
-  const [errorsInstructor, setErrorsInstructor] = useState(emptyErrorsInstructor);
+  const [clientListSignIn, setClientListSignIn] = useState([]);
+  const [formData, setFormData] = useState(emptyForm);
+  const [formDataSignIn, setFormDataSignIn] = useState(emptyFormSignIn);
+  const [errors, setErrors] = useState(emptyErrors);
+  const [errorsSignIn, setErrorsSignIn] = useState(emptyErrorsSignIn);
   const [disabled, setDisabled] = useState(true);
+  const [disabledSignIn, setDisabledSignIn] = useState(true);
 
-  const formSubmitClient = () => {
+  const formSubmit = () => {
     const newClient = {
-      name: formDataClient.name.trim(),
-      email: formDataClient.email.trim(),
-      password: formDataClient.email.trim(),
+      username: formData.username.trim(),
+      password: formData.password.trim(),
+      instructor: formData.instructor.trim(),
     }
     setClientList([
       newClient,
@@ -60,72 +54,71 @@ function App() {
     ]);
   }
 
-  const formSubmitInstructor = () => {
-    const newInstructor = {
-      name: formDataInstructor.name.trim(),
-      email: formDataInstructor.email.trim(),
-      password: formDataInstructor.email.trim(),
-      auth: formDataInstructor.auth.trim(),
+  const formSubmitSignIn = () => {
+    const signInClient = {
+      username: formDataSignIn.username.trim(),
+      password: formDataSignIn.password.trim(),
+      instructor: formDataSignIn.instructor.trim(),
     }
-    setInstructorList([
-      newInstructor,
-      ...instructorList
+    setClientListSignIn([
+      signInClient,
+      ...clientListSignIn
     ]);
   }
 
-  const handleChangesClient = (name, value) => {
-    Yup.reach(ClientSchema, name)
+  const handleChanges = (name, value) => {
+    Yup.reach(SchemaSignUp, name)
       .validate(value)
       .then(()=>{
-        setErrorsClient({
-          ...errorsClient,
+        setErrors({
+          ...errors,
           [name]: ""
         })
       })
       .catch((err)=>{
-        setErrorsClient({
-          ...errorsClient,
+        setErrors({
+          ...errors,
           [name]: err.errors[0]
         })
       });
-      setFormDataClient({
-      ...formDataClient,
+      setFormData({
+      ...formData,
       [name]: value
     });
   }
 
-  const handleChangesInstructor = (name, value) => {
-    Yup.reach(InstructorSchema, name)
+  const handleChangesSignIn = (name, value) => {
+    Yup.reach(SchemaSignIn, name)
       .validate(value)
       .then(()=>{
-        setErrorsInstructor({
-          ...errorsInstructor,
+        setErrorsSignIn({
+          ...errorsSignIn,
           [name]: ""
         })
       })
       .catch((err)=>{
-        setErrorsInstructor({
-          ...errorsInstructor,
+        setErrorsSignIn({
+          ...errorsSignIn,
           [name]: err.errors[0]
         })
       });
-      setFormDataInstructor({
-      ...formDataInstructor,
+      setFormDataSignIn({
+      ...formDataSignIn,
       [name]: value
     });
   }
 
   useEffect(() => {
-    ClientSchema.isValid(formDataClient).then((valid)=> {
+    SchemaSignUp.isValid(formData).then((valid)=> {
       setDisabled(!valid);
     });
-  }, [formDataClient]);
+  }, [formData]);
 
   useEffect(() => {
-    InstructorSchema.isValid(formDataInstructor).then((valid)=> {
-      setDisabled(!valid);
+    SchemaSignIn.isValid(formDataSignIn).then((valid)=> {
+      setDisabledSignIn(!valid);
     });
-  }, [formDataInstructor]);
+  }, [formDataSignIn]);
 
   return (
     <BrowserRouter>
@@ -136,7 +129,6 @@ function App() {
             <nav>
               <Link to="/" style={{paddingLeft: "15px", color: "black"}}>Home</Link>
               <Link to="/client-sign-in" style={{paddingLeft: "15px", color: "black"}}>Sign In</Link>
-              <Link to="/instructor-sign-in" style={{paddingLeft: "15px", color: "black"}}>Instructor Sign In</Link>
             </nav>
           </div>
           <div className="slogan">
@@ -146,42 +138,22 @@ function App() {
 
         <Switch>
           <Route path={"/client-sign-up"} >
-            <ClientSignUp 
-              formData={formDataClient}
+            <SignUp 
+              formData={formData}
               disabled={disabled}
-              formSubmit={formSubmitClient}
-              handleChanges={handleChangesClient}
-              errors={errorsClient}
+              formSubmit={formSubmit}
+              handleChanges={handleChanges}
+              errors={errors}
             />
           </Route>
 
           <Route path={"/client-sign-in"} >
-            <ClientSignIn 
-              formData={formDataClient}
-              disabled={disabled}
-              formSubmit={formSubmitClient}
-              handleChanges={handleChangesClient}
-              errors={errorsClient}
-            />
-          </Route>
-
-          <Route path={"/instructor-sign-up"} >
-          <InstructorSignUp 
-              formData={formDataInstructor}
-              disabled={disabled}
-              formSubmit={formSubmitInstructor}
-              handleChanges={handleChangesInstructor}
-              errors={errorsInstructor}
-            />
-          </Route>
-
-          <Route path={"/instructor-sign-in"} >
-          <InstructorSignIn 
-              formData={formDataInstructor}
-              disabled={disabled}
-              formSubmit={formSubmitInstructor}
-              handleChanges={handleChangesInstructor}
-              errors={errorsInstructor}
+            <SignIn 
+              formData={formDataSignIn}
+              disabled={disabledSignIn}
+              formSubmit={formSubmitSignIn}
+              handleChanges={handleChangesSignIn}
+              errors={errorsSignIn}
             />
           </Route>
 

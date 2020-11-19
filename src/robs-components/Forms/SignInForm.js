@@ -5,8 +5,9 @@ export default function FormClient(props){
   const { formData, disabled, formSubmit, handleChanges, errors } = props;
 
   const onChange = (evt) => {
-    const {name, value} = evt.target;
-    handleChanges(name, value);
+    const {name, value, checked, type} = evt.target;
+    const correctValue = type === "checkbox" ? checked : value;
+    handleChanges(name, correctValue);
   }
 
   const onSubmit = (evt) => {
@@ -15,22 +16,13 @@ export default function FormClient(props){
   }
 
   return(
-    <StyledInstructorForm>
+    <StyledClientForm>
       <form onSubmit={onSubmit}>
-        <label> Name:
+        <label> Username:
           <input 
             type="text"
-            name="name"
-            value={formData.name}
-            onChange={onChange}
-          />
-        </label>
-
-        <label> Email:
-          <input 
-            type="email"
-            name="email"
-            value={formData.email}
+            name="username"
+            value={formData.username}
             onChange={onChange}
           />
         </label>
@@ -44,30 +36,19 @@ export default function FormClient(props){
           />
         </label>
 
-        <label> Authorization Code:
-          <input 
-            type="text"
-            name="auth"
-            value={formData.auth}
-            onChange={onChange}
-          />
-        </label>
-
         <div className="submit-section">
           <div className="errors">
-              <div>{errors.name}</div>
-              <div>{errors.email}</div>
+              <div>{errors.username}</div>
               <div>{errors.password}</div>
-              <div>{errors.auth}</div>
           </div>
           <button disabled={disabled} >Sign Up</button>
         </div>
       </form>
-    </StyledInstructorForm>
+    </StyledClientForm>
   )
 }
 
-const StyledInstructorForm = Styled.div`
+const StyledClientForm = Styled.div`
   form{
     display: flex;
     flex-direction: column;
@@ -78,6 +59,21 @@ const StyledInstructorForm = Styled.div`
       font-size: 1.2rem;
       margin: 20px;
       text-align: center;
+    }
+
+    button{
+      background-color: orange;
+      border: none;
+      border: 1px solid black;
+      padding: 15px 32px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 2px 2px 2px grey;
+    }
+    button:Hover {
+      background-color: white;
+      border: 1px solid orange;
+      color: orange;
     }
   }
 `;

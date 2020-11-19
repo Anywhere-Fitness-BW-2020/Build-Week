@@ -1,5 +1,5 @@
 import React from "react";
-import FormClient from "../Forms/FormClient";
+import Form from "../Forms/SignInForm";
 import Styled from "styled-components";
 
 export default function ClientSignIn(props){
@@ -18,13 +18,14 @@ export default function ClientSignIn(props){
           <h2>Client<br/>Sign In</h2>
         </div>
 
-        <FormClient 
-          formData={formData} 
-          disabled={disabled}
-          formSubmit={formSubmit}
-          handleChanges={handleChanges}
-          errors={errors}
-        />
+          <Form 
+            formData={formData} 
+            disabled={disabled}
+            formSubmit={formSubmit}
+            handleChanges={handleChanges}
+            errors={errors}
+          />
+
       </div>
 
     </ClientSignInStyles>
@@ -47,6 +48,7 @@ const ClientSignInStyles = Styled.div`
   }
 
   .form-container{
+    min-width: 50vw;
     display: flex;
     flex-direction: column;
     Justify-content: space-evenly;

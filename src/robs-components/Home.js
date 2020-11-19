@@ -5,12 +5,8 @@ import Styled from "styled-components";
 export default function Home(){
   const history = useHistory();
 
-  const clientButton = () => {
+  const signUpButton = () => {
     history.push("/client-sign-up");
-  }
-
-  const instructorButton = () => {
-    history.push("/instructor-sign-up");
   }
 
   return(
@@ -20,9 +16,8 @@ export default function Home(){
         <p>Doggo ipsum wrinkler such treat long woofer. Long doggo very jealous pupper fat boi puggorino, woofer long bois. very jealous pupper shoob the neighborhood pupper. puggorino the neighborhood pupper clouds. Big ol floofs wow very biscit blep you are doin me a concern, most angery pupper I have ever seen wrinkler. Shooberino the neighborhood pupper very taste wow porgo he made many woofs length boy wrinkler very good spot, such treat tungg many pats you are doing me a frighten vvv pupper. Long bois wow such tempt big ol pupper maximum borkdrive, dat tungg tho.
         </p>
       </div>
-      <div className="buttons-container">
-        <button onClick={clientButton} >Sign Up Today!</button>
-        <button onClick={instructorButton} >Instructor Sign Up Here!</button>
+      <div className="button-container">
+        <button onClick={signUpButton} >Sign Up Today!</button>
       </div>
     </StyledHome>
   )
@@ -56,7 +51,7 @@ const StyledHome = Styled.div`
       max-width: 100vw;
     }
   }
-  .buttons-container{
+  .button-container{
     display: flex;
     justify-content: space-evenly;
     align-items: center;

@@ -1,5 +1,5 @@
 import React from "react";
-import FormClient from "../Forms/FormClient";
+import Form from "../Forms/FormClient";
 import Styled from "styled-components";
 
 export default function ClientSignUp(props){
@@ -18,7 +18,7 @@ export default function ClientSignUp(props){
           <h2>Client<br/>Sign Up</h2>
         </div>
 
-        <FormClient 
+        <Form 
           formData={formData} 
           disabled={disabled}
           formSubmit={formSubmit}
@@ -47,6 +47,7 @@ const ClientSignUpStyles = Styled.div`
   }
 
   .form-container{
+    min-width: 50vw;
     display: flex;
     flex-direction: column;
     Justify-content: space-evenly;
