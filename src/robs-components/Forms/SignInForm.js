@@ -60,5 +60,20 @@ const StyledClientForm = Styled.div`
       margin: 20px;
       text-align: center;
     }
+
+    button{
+      background-color: orange;
+      border: none;
+      border: 1px solid black;
+      padding: 15px 32px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 2px 2px 2px grey;
+    }
+    button:Hover {
+      background-color: white;
+      border: 1px solid orange;
+      color: orange;
+    }
   }
 `;

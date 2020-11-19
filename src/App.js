@@ -45,7 +45,7 @@ function App() {
 
   const formSubmit = () => {
     const newClient = {
-      name: formData.name.trim(),
+      username: formData.name.trim(),
       password: formData.password.trim(),
       instructor: formData.instructor.trim(),
     }
@@ -57,7 +57,7 @@ function App() {
 
   const formSubmitSignIn = () => {
     const signInClient = {
-      name: formDataSignIn.name.trim(),
+      username: formDataSignIn.name.trim(),
       password: formDataSignIn.password.trim(),
       instructor: formDataSignIn.instructor.trim(),
     }
