@@ -1,8 +1,12 @@
 import React from "react";
 import Styled from "styled-components";
+import axios from "axios"
+import { axiosWithAuth } from "../../donnies-components/utils/axiosWithAuth";
+import { useHistory } from "react-router-dom";
 
 export default function FormClient(props){
   const { formData, disabled, formSubmit, handleChanges, errors } = props;
+   let history = useHistory();
 
   const onChange = (evt) => {
     const {name, value, checked, type} = evt.target;
@@ -12,7 +16,17 @@ export default function FormClient(props){
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    formSubmit();
+    axios
+      .post("https://anywhere-fitness.herokuapp.com/auth/login", formData)
+      .then((req)=>{
+        console.log(req)
+        window.localStorage.setItem("token", req.data.token)
+        req.data.instructor === true ? history.push("/create-class") : history.push("/view-classes")
+        // history.push("/create-class")
+      })
+
+
+    // formSubmit();
   }
 
   return(

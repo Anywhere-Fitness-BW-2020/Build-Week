@@ -9,6 +9,7 @@ import SignUp from "./robs-components/Sign Ups/ClientSignUp";
 import SignIn from "./robs-components/Sign Ins/ClientSignIn";
 import SchemaSignUp from "./robs-components/Validations/ClientValidation";
 import SchemaSignIn from "./robs-components/Validations/ValidationSignIn";
+import CreateClass from "./donnies-components/components/CreateClass"
 
 const emptyForm = {
   username: "",
@@ -137,6 +138,9 @@ function App() {
         </header>
 
         <Switch>
+          <Route path={"/create-class"}>
+            <CreateClass />
+          </Route>
           <Route path={"/client-sign-up"} >
             <SignUp 
               formData={formData}
