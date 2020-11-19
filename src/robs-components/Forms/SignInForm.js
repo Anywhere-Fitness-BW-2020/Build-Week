@@ -21,8 +21,8 @@ export default function FormClient(props){
         <label> Username:
           <input 
             type="text"
-            name="name"
-            value={formData.name}
+            name="username"
+            value={formData.username}
             onChange={onChange}
           />
         </label>

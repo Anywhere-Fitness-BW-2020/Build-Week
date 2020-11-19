@@ -1,7 +1,6 @@
 import React from "react";
 import Form from "../Forms/SignInForm";
 import Styled from "styled-components";
-import { boolean } from "yup";
 
 export default function ClientSignIn(props){
   const { formData, disabled, formSubmit, handleChanges, errors } = props;
