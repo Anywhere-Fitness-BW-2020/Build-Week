@@ -1,7 +1,9 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import ClassItem from "./ClassItem"
-
+import {ClassContext} from "../contexts/ClassContext"
 export default function Classes(props) {
+
+    const {classesStored} = useContext(ClassContext)
     const edit = (e) =>{
         console.log(e.target)
     }
@@ -11,8 +13,8 @@ export default function Classes(props) {
     return (
         <div>
             <h1>List of classes created</h1>
-            <p>{console.log(props)}</p>
-            {props.classList.map((item)=>(
+            <p>{/*console.log(classesStored)*/}</p>
+            {classesStored.map((item)=>( 
                 /*<div>
                     <h1>{item.name}</h1>
                     <button onClick={edit} >edit</button>
@@ -20,7 +22,10 @@ export default function Classes(props) {
                 </div>  */
                 <div>
                     <ClassItem items={item}  />
+        
                 </div>    
+                
+
             ))}
         </div>
     )
