@@ -10,6 +10,11 @@ import SignIn from "./robs-components/Sign Ins/ClientSignIn";
 import SchemaSignUp from "./robs-components/Validations/ClientValidation";
 import SchemaSignIn from "./robs-components/Validations/ValidationSignIn";
 import CreateClass from "./donnies-components/components/CreateClass"
+import CreateClassUpdated from "./donnies-components/components/CreateClassUpdated"
+import ClassList from "./donnies-components/components/ClassList"
+import UpdateClasses from "./donnies-components/components/UpdateClasses"
+import {ClassContext} from "./donnies-components/contexts/ClassContext"
+
 
 const emptyForm = {
   username: "",
@@ -138,8 +143,14 @@ function App() {
         </header>
 
         <Switch>
+          <Route path={"/update-class/:id"}>
+            <UpdateClasses />
+          </Route>
+          <Route path={"/class-list"}>
+            <ClassList />
+          </Route>
           <Route path={"/create-class"}>
-            <CreateClass />
+            <CreateClassUpdated />
           </Route>
           <Route path={"/client-sign-up"} >
             <SignUp 
