@@ -10,6 +10,13 @@ import SignIn from "./robs-components/Sign Ins/ClientSignIn";
 import SchemaSignUp from "./robs-components/Validations/ClientValidation";
 import SchemaSignIn from "./robs-components/Validations/ValidationSignIn";
 import CreateClass from "./donnies-components/components/CreateClass"
+import CreateClassUpdated from "./donnies-components/components/CreateClassUpdated"
+import ClassList from "./donnies-components/components/ClassList"
+import UpdateClasses from "./donnies-components/components/UpdateClasses"
+import {ClassContext} from "./donnies-components/contexts/ClassContext"
+import {axiosWithAuth} from "./donnies-components/utils/axiosWithAuth"
+
+
 
 const emptyForm = {
   username: "",
@@ -42,6 +49,21 @@ function App() {
   const [errorsSignIn, setErrorsSignIn] = useState(emptyErrorsSignIn);
   const [disabled, setDisabled] = useState(true);
   const [disabledSignIn, setDisabledSignIn] = useState(true);
+
+  const [classesStored, setClasses] = useState([])
+
+  useEffect(()=>{
+        axiosWithAuth()
+            .get("https://anywhere-fitness.herokuapp.com/classes")
+            .then((res)=>{
+                // console.log(res.data)
+                setClasses(res.data)
+                // console.log(classesStored)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+    },[])
 
   const formSubmit = () => {
     const newClient = {
@@ -122,7 +144,8 @@ function App() {
   }, [formDataSignIn]);
 
   return (
-    <BrowserRouter>
+  <ClassContext.Provider value={{classesStored, setClasses}}>
+      <BrowserRouter>
       <AppStyles className="App">
         <header className="App-header">
           <div className="title">
@@ -138,8 +161,14 @@ function App() {
         </header>
 
         <Switch>
+          <Route path={"/update-class/:id"}>
+            <UpdateClasses />
+          </Route>
+          <Route path={"/class-list"}>
+            <ClassList />
+          </Route>
           <Route path={"/create-class"}>
-            <CreateClass />
+            <CreateClassUpdated />
           </Route>
           <Route path={"/client-sign-up"} >
             <SignUp 
@@ -172,6 +201,8 @@ function App() {
         </footer>
       </AppStyles>
     </BrowserRouter>
+  </ClassContext.Provider>
+    
   );
 }
 
